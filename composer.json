@@ -1,4 +1,14 @@
 {
+    "name": "adrienlucas/test-driven-symfony",
+    "description": "A Symfony Bundle designed to ease the process of TDD.",
+    "license": "MIT",
+    "keywords": ["generator", "code generator", "scaffolding", "scaffold"],
+    "authors": [
+        {
+            "name": "Adrien LUCAS",
+            "email": "contact@adrienlucas.net"
+        }
+    ],
     "require": {
         "doctrine/data-fixtures": "^1.3"
     },
