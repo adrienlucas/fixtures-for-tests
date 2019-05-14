@@ -1,8 +1,8 @@
 {
-    "name": "adrienlucas/test-driven-symfony",
-    "description": "A Symfony Bundle designed to ease the process of TDD.",
+    "name": "adrien/fixtures-fox-tests",
+    "description": "A set of traits to be used in test cases to load fixtures",
     "license": "MIT",
-    "keywords": ["generator", "code generator", "scaffolding", "scaffold"],
+    "keywords": ["generator", "code generator", "tdd", "test-driven-development"],
     "authors": [
         {
             "name": "Adrien LUCAS",
