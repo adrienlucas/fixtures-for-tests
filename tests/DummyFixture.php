@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -16,6 +15,6 @@ class DummyFixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         static::$calls++;
-        DummyFixture::$totalCalls++;
+        ++DummyFixture::$totalCalls;
     }
 }

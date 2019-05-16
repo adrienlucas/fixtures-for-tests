@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-
 use Adrien\FixturesForTests\FixtureExecutorFactory;
 use Doctrine\Common\DataFixtures\Executor\MongoDBExecutor;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
@@ -45,19 +44,19 @@ class FixtureExecutorFactoryTest extends TestCase
         yield 'orm' => [
             static::createConfiguredMock(EntityManagerInterface::class, ['getEventManager' => new EventManager()]),
             ORMExecutor::class,
-            ORMPurger::class
+            ORMPurger::class,
         ];
 
         yield 'phpcr' => [
             static::createMock(PHPCRDocumentManager::class),
             PHPCRExecutor::class,
-            PHPCRPurger::class
+            PHPCRPurger::class,
         ];
 
         yield 'mongodb' => [
             static::createConfiguredMock(MongoDBDocumentManager::class, ['getEventManager' => new EventManager()]),
             MongoDBExecutor::class,
-            MongoDBPurger::class
+            MongoDBPurger::class,
         ];
     }
 
@@ -67,4 +66,3 @@ class FixtureExecutorFactoryTest extends TestCase
         FixtureExecutorFactory::createManagerExecutor(static::createMock(ObjectManager::class));
     }
 }
-

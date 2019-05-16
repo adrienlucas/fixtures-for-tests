@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-
 use Adrien\FixtureLoaderTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
@@ -16,7 +15,7 @@ class DummyFactory
         return EntityManager::create(
             [
                 'driver' => 'pdo_sqlite',
-                'path' => __DIR__ . '/../db.sqlite'
+                'path' => __DIR__.'/../db.sqlite',
             ],
             Setup::createXMLMetadataConfiguration([])
         );
@@ -26,6 +25,7 @@ class DummyFactory
     {
         new class($objectManager, $firstRequestedFixture, $secondRequestedFixture) {
             use FixtureLoaderTrait;
+
             public function __construct($manager, ...$fixtures)
             {
                 $this->loadFixture($manager, ...$fixtures);
@@ -35,7 +35,9 @@ class DummyFactory
 
     public static function createFixture()
     {
-        $f = new class extends DummyFixture {};
+        $f = new class() extends DummyFixture {
+        };
+
         return $f;
     }
 }

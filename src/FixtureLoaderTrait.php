@@ -11,8 +11,6 @@ trait FixtureLoaderTrait
     public function loadFixture(ObjectManager $manager, FixtureInterface ...$fixtures)
     {
         $loader = new Loader();
-
-        /** @uses Loader::addFixture() */
         array_map([$loader, 'addFixture'], $fixtures);
 
         $executor = FixtureExecutorFactory::createManagerExecutor($manager);

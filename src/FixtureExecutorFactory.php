@@ -21,15 +21,15 @@ class FixtureExecutorFactory
 {
     public static function createManagerExecutor(ObjectManager $manager): AbstractExecutor
     {
-        if($manager instanceof EntityManagerInterface) {
+        if ($manager instanceof EntityManagerInterface) {
             return new ORMExecutor($manager, new ORMPurger($manager));
         }
 
-        if($manager instanceof DocumentManagerInterface) {
+        if ($manager instanceof DocumentManagerInterface) {
             return new PHPCRExecutor($manager, new PHPCRPurger($manager));
         }
 
-        if($manager instanceof DocumentManager) {
+        if ($manager instanceof DocumentManager) {
             return new MongoDBExecutor($manager, new MongoDBPurger($manager));
         }
 

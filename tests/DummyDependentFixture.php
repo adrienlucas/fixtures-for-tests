@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\AssertionFailedError;
@@ -31,7 +30,7 @@ class DummyDependentFixture extends DummyFixture implements DependentFixtureInte
 
     /**
      * This method must return an array of fixtures classes
-     * on which the implementing class depends on
+     * on which the implementing class depends on.
      *
      * @return array
      */

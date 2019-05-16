@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-
 use Adrien\FixturesForTests\FixtureAttachedTrait;
 use Doctrine\Common\Persistence\ObjectManager;
 use LogicException;
@@ -17,7 +16,7 @@ class FixtureAttachedTraitTest extends TestCase
 {
     public function testItThrowsAnExceptionWhenTheUsingClassIsNotAKernelTestCase()
     {
-        $notValidUser = new class {
+        $notValidUser = new class() {
             use FixtureAttachedTrait;
         };
 
@@ -49,7 +48,7 @@ class FixtureAttachedTraitTest extends TestCase
 
     private static function assertFixtureLoadCalls(string $fixtureName, int $expectedNumberOfCalls = 1): void
     {
-        if(!is_subclass_of($fixtureName, DummyFixture::class)) {
+        if (!is_subclass_of($fixtureName, DummyFixture::class)) {
             throw new LogicException('A DummyFixture child class should have been provided.');
         }
 
@@ -88,5 +87,5 @@ class DummyTestCase extends KernelTestCase
 
 class DummyTestCaseFixture extends DummyFixture
 {
-    static public $calls = 0;
+    public static $calls = 0;
 }

@@ -13,12 +13,13 @@ class FixtureLoaderTraitTest extends TestCase
     {
         $objectManager = DummyFactory::createEntityManager();
 
-        $requestedFixture = new class extends DummyFixture {
-            static public $calls = 0;
+        $requestedFixture = new class() extends DummyFixture {
+            public static $calls = 0;
         };
 
         new class($objectManager, $requestedFixture) {
             use FixtureLoaderTrait;
+
             public function __construct($manager, $fixture)
             {
                 $this->loadFixture($manager, $fixture);
@@ -32,15 +33,16 @@ class FixtureLoaderTraitTest extends TestCase
     {
         $objectManager = DummyFactory::createEntityManager();
 
-        $firstRequestedFixture = new class extends DummyFixture {
-            static public $calls = 0;
+        $firstRequestedFixture = new class() extends DummyFixture {
+            public static $calls = 0;
         };
-        $secondRequestedFixture = new class extends DummyFixture {
-            static public $calls = 0;
+        $secondRequestedFixture = new class() extends DummyFixture {
+            public static $calls = 0;
         };
 
         new class($objectManager, $firstRequestedFixture, $secondRequestedFixture) {
             use FixtureLoaderTrait;
+
             public function __construct($manager, $firstRequestedFixture, $secondRequestedFixture)
             {
                 $this->loadFixture($manager, $firstRequestedFixture, $secondRequestedFixture);
@@ -56,14 +58,15 @@ class FixtureLoaderTraitTest extends TestCase
         $objectManager = DummyFactory::createEntityManager();
 
         $firstOrderedFixture = new class(0) extends DummyOrderedFixture {
-            static public $calls = 0;
+            public static $calls = 0;
         };
         $secondOrderedFixture = new class(1) extends DummyOrderedFixture {
-            static public $calls = 0;
+            public static $calls = 0;
         };
 
         new class($objectManager, $firstOrderedFixture, $secondOrderedFixture) {
             use FixtureLoaderTrait;
+
             public function __construct($manager, $firstOrderedFixture, $secondOrderedFixture)
             {
                 $this->loadFixture($manager, $secondOrderedFixture, $firstOrderedFixture);
@@ -79,16 +82,17 @@ class FixtureLoaderTraitTest extends TestCase
     {
         $objectManager = DummyFactory::createEntityManager();
 
-        $mainFixture = new class extends DummyFixture {
-            static public $calls = 0;
+        $mainFixture = new class() extends DummyFixture {
+            public static $calls = 0;
         };
 
         $dependentFixture = new class(1, get_class($mainFixture)) extends DummyDependentFixture {
-            static public $calls = 0;
+            public static $calls = 0;
         };
 
         new class($objectManager, $dependentFixture) {
             use FixtureLoaderTrait;
+
             public function __construct($manager, $dependentFixture)
             {
                 $this->loadFixture($manager, $dependentFixture);
