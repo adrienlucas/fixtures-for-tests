@@ -1,0 +1,13 @@
+preset: symfony
+
+finder:
+    exclude:
+        - "tests"
+    path:
+        - "src"
+
+enabled:
+    - short_array_syntax
+
+disabled:
+    - yoda_style
