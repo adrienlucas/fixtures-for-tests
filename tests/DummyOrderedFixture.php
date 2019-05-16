@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Adrien\Tests;
+namespace Adrien\FixturesForTests\Tests;
 
-
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\AssertionFailedError;

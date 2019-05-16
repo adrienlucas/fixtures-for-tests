@@ -1,8 +1,7 @@
 <?php
 
-namespace Adrien;
+namespace Adrien\FixturesForTests;
 
-use Adrien\Tests\DummyFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\Persistence\ObjectManager;

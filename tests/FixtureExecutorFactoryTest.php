@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Adrien\Tests;
+namespace Adrien\FixturesForTests\Tests;
 
 
-use Adrien\FixtureExecutorFactory;
+use Adrien\FixturesForTests\FixtureExecutorFactory;
 use Doctrine\Common\DataFixtures\Executor\MongoDBExecutor;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Executor\PHPCRExecutor;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Adrien;
+namespace Adrien\FixturesForTests;
 
 
 use LogicException;

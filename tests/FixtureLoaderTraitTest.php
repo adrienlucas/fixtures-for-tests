@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Adrien\Tests;
+namespace Adrien\FixturesForTests\Tests;
 
-use Adrien\FixtureLoaderTrait;
+use Adrien\FixturesForTests\FixtureLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class FixtureLoaderTraitTest extends TestCase

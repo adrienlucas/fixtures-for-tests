@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Adrien\Tests;
+namespace Adrien\FixturesForTests\Tests;
 
 
-use Adrien\FixtureAttachedTrait;
+use Adrien\FixturesForTests\FixtureAttachedTrait;
 use Doctrine\Common\Persistence\ObjectManager;
 use LogicException;
 use PHPUnit\Framework\TestCase;
