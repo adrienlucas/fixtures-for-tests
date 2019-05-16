@@ -17,14 +17,7 @@ class FixtureLoaderTraitTest extends TestCase
             public static $calls = 0;
         };
 
-        new class($objectManager, $requestedFixture) {
-            use FixtureLoaderTrait;
-
-            public function __construct($manager, $fixture)
-            {
-                $this->loadFixture($manager, $fixture);
-            }
-        };
+        DummyFactory::createTraitUser($objectManager, $requestedFixture);
 
         static::assertFixtureLoadCalls($requestedFixture);
     }
@@ -40,14 +33,7 @@ class FixtureLoaderTraitTest extends TestCase
             public static $calls = 0;
         };
 
-        new class($objectManager, $firstRequestedFixture, $secondRequestedFixture) {
-            use FixtureLoaderTrait;
-
-            public function __construct($manager, $firstRequestedFixture, $secondRequestedFixture)
-            {
-                $this->loadFixture($manager, $firstRequestedFixture, $secondRequestedFixture);
-            }
-        };
+        DummyFactory::createTraitUser($objectManager, $firstRequestedFixture, $secondRequestedFixture);
 
         static::assertFixtureLoadCalls($firstRequestedFixture);
         static::assertFixtureLoadCalls($secondRequestedFixture);
@@ -63,19 +49,16 @@ class FixtureLoaderTraitTest extends TestCase
         $secondOrderedFixture = new class(1) extends DummyOrderedFixture {
             public static $calls = 0;
         };
-
-        new class($objectManager, $firstOrderedFixture, $secondOrderedFixture) {
-            use FixtureLoaderTrait;
-
-            public function __construct($manager, $firstOrderedFixture, $secondOrderedFixture)
-            {
-                $this->loadFixture($manager, $secondOrderedFixture, $firstOrderedFixture);
-            }
+        $thirdOrderedFixture = new class(2) extends DummyOrderedFixture {
+            public static $calls = 0;
         };
 
-        static::assertSame(2, DummyFixture::$totalCalls);
+        DummyFactory::createTraitUser($objectManager, $secondOrderedFixture, $thirdOrderedFixture, $firstOrderedFixture);
+
+        static::assertSame(3, DummyFixture::$totalCalls);
         static::assertFixtureLoadCalls($firstOrderedFixture);
         static::assertFixtureLoadCalls($secondOrderedFixture);
+        static::assertFixtureLoadCalls($thirdOrderedFixture);
     }
 
     public function testItLoadsTheRequestedDependentFixtures()
@@ -90,14 +73,7 @@ class FixtureLoaderTraitTest extends TestCase
             public static $calls = 0;
         };
 
-        new class($objectManager, $dependentFixture) {
-            use FixtureLoaderTrait;
-
-            public function __construct($manager, $dependentFixture)
-            {
-                $this->loadFixture($manager, $dependentFixture);
-            }
-        };
+        DummyFactory::createTraitUser($objectManager, $dependentFixture);
 
         static::assertSame(2, DummyFixture::$totalCalls);
         static::assertFixtureLoadCalls($mainFixture);

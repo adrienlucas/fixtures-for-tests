@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-use Adrien\FixtureLoaderTrait;
+use Adrien\FixturesForTests\FixtureLoaderTrait;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
@@ -21,23 +22,15 @@ class DummyFactory
         );
     }
 
-    public static function createTraitUser($objectManager, $firstRequestedFixture, $secondRequestedFixture = null)
+    public static function createTraitUser($objectManager, FixtureInterface...$fixtures)
     {
-        new class($objectManager, $firstRequestedFixture, $secondRequestedFixture) {
+        new class($objectManager, ...$fixtures) {
             use FixtureLoaderTrait;
 
-            public function __construct($manager, ...$fixtures)
+            public function __construct($manager, FixtureInterface...$fixtures)
             {
                 $this->loadFixture($manager, ...$fixtures);
             }
         };
-    }
-
-    public static function createFixture()
-    {
-        $f = new class() extends DummyFixture {
-        };
-
-        return $f;
     }
 }
