@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Adrien\FixturesForTests\Tests;
 
 use Adrien\FixturesForTests\FixtureLoaderTrait;
+use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 
 class FixtureLoaderTraitTest extends TestCase
@@ -80,9 +81,27 @@ class FixtureLoaderTraitTest extends TestCase
         static::assertFixtureLoadCalls($dependentFixture);
     }
 
+//    public function testItPurgesTheDatabaseBeforeLoadingFixtures()
+//    {
+//        $objectManager = DummyFactory::createEntityManager();
+//
+//        $mainFixture = new class() extends DummyFixture {
+//            public static $calls = 0;
+//            public function load(ObjectManager $manager)
+//            {
+//                static::$calls++;
+//                ++DummyFixture::$totalCalls;
+//
+//                $manager->persist();
+//            }
+//        };
+//    }
+
     public function setUp(): void
     {
         DummyFixture::$totalCalls = 0;
+//        $objectManager = DummyFactory::createEntityManager();
+//        $tool->createSchema($classes);
     }
 
     private static function assertFixtureLoadCalls(DummyFixture $fixture, int $expectedNumberOfCalls = 1): void
