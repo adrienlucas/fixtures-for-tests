@@ -18,7 +18,7 @@ class DummyFactory
                 'driver' => 'pdo_sqlite',
                 'path' => __DIR__.'/../db.sqlite',
             ],
-            Setup::createXMLMetadataConfiguration([])
+            Setup::createAnnotationMetadataConfiguration([__DIR__])
         );
     }
 
