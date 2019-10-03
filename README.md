@@ -25,6 +25,42 @@ $ composer require adrien/fixtures-for-tests
  - Use the `FixtureLoaderTrait` to add a fixture loading shortcut method.
  - Use the `FixtureAttachedTrait` within a `KernelTestCase` extending class to have fixture loaded automatically before each tests.
  
+### Exemple :
+```php
+<?php
+
+namespace SomeNamespace\Test;
+
+class SomeFeatureTest extends TestCase
+{
+    use FixtureAttachedTrait;
+
+    public function testItDoesWhatIsExpected(): void
+    {
+        
+    }
+}
+```
+
+```php
+<?php
+
+namespace SomeNamespace\Test;
+
+class SomeFeatureFixture implements FixtureInterface
+{
+    public function load(ObjectManager $manager): void
+    {
+        $dummy = new SomeEntity();
+        $dummy->setSomething('something');
+        
+        $
+        $manager->persist($dummy);
+        $manager->flush();
+    }
+}
+```
+
 ## Contributing and testing
 
 ``` bash
