@@ -1,0 +1,13 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "testFramework":"phpunit",
+    "bootstrap": "./vendor/autoload.php",
+    "logs": {
+        "text": "infection.log"
+    }
+}
