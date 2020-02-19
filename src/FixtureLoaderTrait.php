@@ -4,18 +4,23 @@ namespace Adrien\FixturesForTests;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Doctrine\Common\DataFixtures\SharedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 trait FixtureLoaderTrait
 {
-    public function loadFixture(ObjectManager $manager, FixtureInterface ...$fixtures)
+    /** @var ReferenceRepository */
+    protected $fixtureRepository;
+
+    private function loadFixture(ObjectManager $manager, FixtureInterface ...$fixtures): void
     {
+        $executor = FixtureExecutorFactory::createManagerExecutor($manager);
+        $this->fixtureRepository = $executor->getReferenceRepository();
+
         $loader = new Loader();
         array_map([$loader, 'addFixture'], $fixtures);
 
-        $executor = FixtureExecutorFactory::createManagerExecutor($manager);
-        $orderedFixtures = $loader->getFixtures();
-
-        $executor->execute($orderedFixtures);
+        $executor->execute($loader->getFixtures());
     }
 }

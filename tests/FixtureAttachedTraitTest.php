@@ -24,6 +24,21 @@ class FixtureAttachedTraitTest extends TestCase
         $notValidUser->setUp();
     }
 
+    public function testItThrowsAnExceptionWhenTheDoctrineObjectManagerIsNotAvailableInTheServiceContainer()
+    {
+        $mockContainer = static::createMock(ContainerInterface::class);
+        $mockContainer->method('has')->will(static::onConsecutiveCalls(false, false));
+
+        static::expectException(LogicException::class);
+
+        $mockKernel = static::createMock(KernelInterface::class);
+        $mockKernel->method('getContainer')->willReturnReference($mockContainer);
+
+        DummyTestCase::$preparedKernel = $mockKernel;
+        $dummyTestCase = new DummyTestCase();
+        $dummyTestCase->setUp();
+    }
+
     public function testItLoadsFixturesWhenTheSetupMethodIsCalled()
     {
         $objectManager = DummyFactory::createEntityManager();

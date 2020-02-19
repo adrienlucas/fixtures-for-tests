@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
 
 /**
  * @Entity()

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Adrien\FixturesForTests\Tests;
 
-use Adrien\FixturesForTests\FixtureLoaderTrait;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 
@@ -81,6 +81,22 @@ class FixtureLoaderTraitTest extends TestCase
         static::assertFixtureLoadCalls($dependentFixture);
     }
 
+    public function testItLoadsTheRequestedSharedFixtures()
+    {
+        $objectManager = DummyFactory::createEntityManager();
+
+        $fixture = new class() extends AbstractFixture {
+            public const REFERENCE = 'ref';
+            public function load(ObjectManager $manager)
+            {
+                $this->addReference(self::REFERENCE, new DummyEntity());
+            }
+        };
+
+        $testCase = DummyFactory::createTraitUser($objectManager, $fixture);
+        static::assertInstanceOf(DummyEntity::class, $testCase->getFixtureRepository()->getReference($fixture::REFERENCE));
+    }
+
 //    public function testItPurgesTheDatabaseBeforeLoadingFixtures()
 //    {
 //        $objectManager = DummyFactory::createEntityManager();
@@ -100,16 +116,12 @@ class FixtureLoaderTraitTest extends TestCase
     public function setUp(): void
     {
         DummyFixture::$totalCalls = 0;
-//        $objectManager = DummyFactory::createEntityManager();
-//        $tool->createSchema($classes);
     }
 
     private static function assertFixtureLoadCalls(DummyFixture $fixture, int $expectedNumberOfCalls = 1): void
     {
         $actualNumberOfCalls = $fixture::$calls;
-        static::assertSame(
-            $expectedNumberOfCalls,
-            $actualNumberOfCalls,
+        static::assertSame($expectedNumberOfCalls, $actualNumberOfCalls,
             sprintf('The fixture "load" method has been called %d times.', $actualNumberOfCalls)
         );
     }

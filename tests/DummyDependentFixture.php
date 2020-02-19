@@ -19,7 +19,7 @@ class DummyDependentFixture extends DummyFixture implements DependentFixtureInte
         $this->dependency = $dependency;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         if (DummyFixture::$totalCalls !== $this->order) {
             throw new AssertionFailedError(sprintf('The fixture has not been called at the right time (calls : %d; order : %d).', DummyFixture::$totalCalls, $this->order));
@@ -28,13 +28,7 @@ class DummyDependentFixture extends DummyFixture implements DependentFixtureInte
         parent::load($manager);
     }
 
-    /**
-     * This method must return an array of fixtures classes
-     * on which the implementing class depends on.
-     *
-     * @return array
-     */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [$this->dependency];
     }
