@@ -21,7 +21,7 @@ trait FixtureAttachedTrait
         $container = (self::bootKernel())->getContainer();
 
         if (!$container->has(ObjectManager::class)) {
-            throw new LogicException('No doctrine ObjectManager service has been found in the service container. Please provide an implementation.');
+            throw new LogicException('No Doctrine ObjectManager service has been found in the service container. Please provide an implementation.');
         }
 
         /** @var ObjectManager $manager */
@@ -33,7 +33,7 @@ trait FixtureAttachedTrait
         );
     }
 
-    public static function getFixtureNameForTestCase(string $testCaseName)
+    private static function getFixtureNameForTestCase(string $testCaseName)
     {
         return $testCaseName.'Fixture';
     }

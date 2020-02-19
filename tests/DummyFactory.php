@@ -6,12 +6,13 @@ namespace Adrien\FixturesForTests\Tests;
 
 use Adrien\FixturesForTests\FixtureLoaderTrait;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
 class DummyFactory
 {
-    public static function createEntityManager()
+    public static function createEntityManager(): EntityManager
     {
         return EntityManager::create(
             [
@@ -22,14 +23,17 @@ class DummyFactory
         );
     }
 
-    public static function createTraitUser($objectManager, FixtureInterface...$fixtures)
+    public static function createTraitUser($objectManager, FixtureInterface...$fixtures): object
     {
-        new class($objectManager, ...$fixtures) {
+        return new class($objectManager, ...$fixtures) {
             use FixtureLoaderTrait;
-
             public function __construct($manager, FixtureInterface...$fixtures)
             {
                 $this->loadFixture($manager, ...$fixtures);
+            }
+            public function getFixtureRepository(): ?ReferenceRepository
+            {
+                return $this->fixtureRepository;
             }
         };
     }
