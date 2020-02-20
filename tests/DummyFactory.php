@@ -14,13 +14,23 @@ class DummyFactory
 {
     public static function createEntityManager(): EntityManager
     {
-        return EntityManager::create(
+        // Clean-up previous remaining database
+        if(file_exists($dbFile = __DIR__.'/../db.sqlite')) {
+            unlink($dbFile);
+        }
+
+        $entityManager = EntityManager::create(
             [
                 'driver' => 'pdo_sqlite',
-                'path' => __DIR__.'/../db.sqlite',
+                'path' => $dbFile,
             ],
             Setup::createAnnotationMetadataConfiguration([__DIR__])
         );
+
+        // Prepare schema for \Adrien\FixturesForTests\Tests\DummyEntity
+        $entityManager->getConnection()->query('CREATE TABLE DummyEntity (id varchar)');
+
+        return $entityManager;
     }
 
     public static function createTraitUser($objectManager, FixtureInterface...$fixtures): object
