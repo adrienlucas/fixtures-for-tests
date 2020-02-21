@@ -2,36 +2,35 @@ language: php
 
 sudo: false
 
+jobs:
+    include:
+        - php: '7.2'
+          env: COVERAGE=1
+        - php: '7.3'
+        - php: '7.4'
+
+    allow_failures:
+        - php: '7.2'
+          env: DEPS=low
 cache:
     directories:
-        - $HOME/.composer/cache/files
+        - $HOME/.composer/cache
 
-php:
-    - 7.2
-    - 7.3
-    - 7.4
 
 env:
     global:
         - TEST_COMMAND="./vendor/bin/phpunit"
 
-matrix:
-    fast_finish: true
-    include:
-        - php: 7.2
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" COVERAGE=true TEST_COMMAND="./vendor/bin/phpunit --coverage-clover phpunit-coverage.xml"
-        - php: 7.3
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
-        - php: 7.4
-          env: COMPOSER_FLAGS="--prefer-stable"
 
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
 
 install:
-    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-stable --quiet; fi
-    - composer update ${COMPOSER_FLAGS} --prefer-source --no-interaction
+    - if [[ $DEPS = 'low' ]]; then
+        composer update --prefer-dist --no-progress --no-suggest --prefer-stable --prefer-lowest --ansi;
+        else
+        composer update --prefer-dist --no-progress --no-suggest --ansi;
+        fi
 
 script:
     - $TEST_COMMAND
