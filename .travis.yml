@@ -1,40 +1,29 @@
 language: php
 
-sudo: false
-
 jobs:
     include:
         - php: '7.2'
-          env: COVERAGE=1
+          env: COVERAGE="--coverage-clover phpunit-coverage.xml"
         - php: '7.3'
         - php: '7.4'
 
     allow_failures:
         - php: '7.2'
-          env: DEPS=low
+          env: DEPS="--prefer-stable --prefer-lowest"
+
 cache:
     directories:
         - $HOME/.composer/cache
 
-
-env:
-    global:
-        - TEST_COMMAND="./vendor/bin/phpunit"
-
-
 before_install:
-    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+    - if [[ $COVERAGE == "" ]]; then phpenv config-rm xdebug.ini || true; fi
 
 install:
-    - if [[ $DEPS = 'low' ]]; then
-        composer update --prefer-dist --no-progress --no-suggest --prefer-stable --prefer-lowest --ansi;
-        else
-        composer update --prefer-dist --no-progress --no-suggest --ansi;
-        fi
+    - composer update --prefer-dist --no-progress --no-suggest --ansi ${DEPS}
 
 script:
-    - $TEST_COMMAND
+    - ./vendor/bin/phpunit ${COVERAGE}
 
 after_success:
-    - if [[ $COVERAGE = true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-    - if [[ $COVERAGE = true ]]; then php ocular.phar code-coverage:upload --format=php-clover phpunit-coverage.xml; fi
+    - if [[ $COVERAGE != "" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+    - if [[ $COVERAGE != "" ]]; then php ocular.phar code-coverage:upload --format=php-clover phpunit-coverage.xml; fi
