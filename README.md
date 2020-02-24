@@ -24,20 +24,24 @@ $ composer require adrien/fixtures-for-tests
  
  - Use the `FixtureLoaderTrait` to add a fixture loading shortcut method.
  - Use the `FixtureAttachedTrait` within a `KernelTestCase` extending class to have fixture loaded automatically before each tests.
- 
-### Exemple :
+### Exemple using PHPUnit + Symfony's KernelTestCase :
+
 ```php
 <?php
 
 namespace SomeNamespace\Test;
 
-class SomeFeatureTest extends TestCase
+use Adrien\FixturesForTests\FixtureAttachedTrait;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+class SomeFeatureTest extends KernelTestCase
 {
     use FixtureAttachedTrait;
 
     public function testItDoesWhatIsExpected(): void
     {
-        
+        $dummy = $this->fixtureRepository->getReference('my_dummy');
+        // ...
     }
 }
 ```
@@ -47,6 +51,58 @@ class SomeFeatureTest extends TestCase
 
 namespace SomeNamespace\Test;
 
+use App\Entity\SomeEntity;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\Persistence\ObjectManager;
+
+class SomeFeatureFixture extends AbstractFixture
+{
+    public function load(ObjectManager $manager): void
+    {
+        $dummy = new SomeEntity();
+        $dummy->setSomething('something');
+
+        $manager->persist($dummy);
+        $manager->flush();
+
+        $this->referenceRepository->addReference('my_dummy', $dummy);
+    }
+}
+```
+
+### Exemple using Behat (with PHPCR) :
+
+```php
+<?php
+
+namespace SomeNamespace\Behat;
+
+use Adrien\FixturesForTests\FixtureLoaderTrait;
+use Behat\Behat\Context\Context;
+use Doctrine\ODM\PHPCR\DocumentManager;
+
+class FeatureContext implements Context
+{
+    use FixtureLoaderTrait;
+
+    /** @BeforeScenario */
+    public function prepareScenarioFixtures()
+    {
+        $persistenceManager = new DocumentManager(/*...*/);
+        $this->loadFixture($persistenceManager, new SomeScenarioFixture());
+    }
+}
+```
+
+```php
+<?php
+
+namespace SomeNamespace\Behat;
+
+use App\Entity\SomeEntity;
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+
 class SomeFeatureFixture implements FixtureInterface
 {
     public function load(ObjectManager $manager): void
@@ -54,7 +110,6 @@ class SomeFeatureFixture implements FixtureInterface
         $dummy = new SomeEntity();
         $dummy->setSomething('something');
         
-        $
         $manager->persist($dummy);
         $manager->flush();
     }
