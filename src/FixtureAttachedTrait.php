@@ -18,14 +18,14 @@ trait FixtureAttachedTrait
             throw new LogicException('The "FixtureAttachedTrait" should only be used on objects extending the symfony/framework-bundle KernelTestCase.');
         }
 
-        $container = (self::bootKernel())->getContainer();
+        self::bootKernel();
 
-        if (!$container->has(ObjectManager::class)) {
+        if (!self::$container->has(ObjectManager::class)) {
             throw new LogicException('No Doctrine ObjectManager service has been found in the service container. Please provide an implementation.');
         }
 
         /** @var ObjectManager $manager */
-        $manager = $container->get(ObjectManager::class);
+        $manager = self::$container->get(ObjectManager::class);
         $fixtureName = static::getFixtureNameForTestCase(get_class($this));
         $this->loadFixture(
             $manager,
