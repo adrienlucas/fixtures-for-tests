@@ -32,7 +32,8 @@ class FixtureAttachedTraitTest extends TestCase
         static::expectException(LogicException::class);
 
         $mockKernel = static::createMock(KernelInterface::class);
-        $mockKernel->method('getContainer')->willReturnReference($mockContainer);
+        $mockKernel->expects(self::once()) // will be called only once within the `KernelTestCase::createKernel` method
+            ->method('getContainer')->willReturnReference($mockContainer);
 
         DummyTestCase::$preparedKernel = $mockKernel;
         $dummyTestCase = new DummyTestCase();
@@ -51,7 +52,8 @@ class FixtureAttachedTraitTest extends TestCase
             ->willReturnReference($objectManager);
 
         $mockKernel = static::createMock(KernelInterface::class);
-        $mockKernel->method('getContainer')->willReturnReference($mockContainer);
+        $mockKernel->expects(self::once()) // will be called only once within the `KernelTestCase::createKernel` method
+            ->method('getContainer')->willReturnReference($mockContainer);
 
         DummyTestCase::$preparedKernel = $mockKernel;
         $dummyTestCase = new DummyTestCase();
