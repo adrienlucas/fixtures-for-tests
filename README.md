@@ -53,7 +53,7 @@ namespace SomeNamespace\Test;
 
 use App\Entity\SomeEntity;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class SomeFeatureFixture extends AbstractFixture
 {
@@ -101,7 +101,7 @@ namespace SomeNamespace\Behat;
 
 use App\Entity\SomeEntity;
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class SomeFeatureFixture implements FixtureInterface
 {

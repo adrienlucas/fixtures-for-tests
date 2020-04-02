@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Adrien\FixturesForTests;
 
 use LogicException;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 trait FixtureAttachedTrait
@@ -20,15 +20,15 @@ trait FixtureAttachedTrait
 
         self::bootKernel();
 
-        if (!self::$container->has(ObjectManager::class)) {
-            throw new LogicException('No Doctrine ObjectManager service has been found in the service container. Please provide an implementation.');
+        if (!self::$container->has(ManagerRegistry::class)) {
+            throw new LogicException('No Doctrine ManagerRegistry service has been found in the service container. Please provide an implementation.');
         }
 
-        /** @var ObjectManager $manager */
-        $manager = self::$container->get(ObjectManager::class);
+        /** @var ManagerRegistry $registry */
+        $registry = self::$container->get(ManagerRegistry::class);
         $fixtureName = static::getFixtureNameForTestCase(get_class($this));
         $this->loadFixture(
-            $manager,
+            $registry->getManager(),
             new $fixtureName()
         );
     }

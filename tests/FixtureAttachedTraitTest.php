@@ -6,6 +6,7 @@ namespace Adrien\FixturesForTests\Tests;
 
 use Adrien\FixturesForTests\FixtureAttachedTrait;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -42,18 +43,20 @@ class FixtureAttachedTraitTest extends TestCase
 
     public function testItLoadsFixturesWhenTheSetupMethodIsCalled()
     {
-        $objectManager = DummyFactory::createEntityManager();
+        $mockRegistry = static::createMock(ManagerRegistry::class);
+        $mockRegistry->method('getManager')
+            ->willReturn(DummyFactory::createEntityManager());
 
         $mockContainer = static::createMock(ContainerInterface::class);
 //        $mockContainer->method('has')->withConsecutive([static::equalTo(ObjectManager::class)], [static::equalTo('test.service_container')])
 //            ->willReturnOnConsecutiveCalls([false, true]);
         $mockContainer->method('has')->will(static::onConsecutiveCalls(false, true));
-        $mockContainer->method('get')->with(ObjectManager::class)
-            ->willReturnReference($objectManager);
+        $mockContainer->method('get')->with(ManagerRegistry::class)
+            ->willReturn($mockRegistry);
 
         $mockKernel = static::createMock(KernelInterface::class);
         $mockKernel->expects(self::once()) // will be called only once within the `KernelTestCase::createKernel` method
-            ->method('getContainer')->willReturnReference($mockContainer);
+            ->method('getContainer')->willReturn($mockContainer);
 
         DummyTestCase::$preparedKernel = $mockKernel;
         $dummyTestCase = new DummyTestCase();
