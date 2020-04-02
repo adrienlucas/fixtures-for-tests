@@ -5,7 +5,6 @@ namespace Adrien\FixturesForTests;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
-use Doctrine\Common\DataFixtures\SharedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 trait FixtureLoaderTrait
