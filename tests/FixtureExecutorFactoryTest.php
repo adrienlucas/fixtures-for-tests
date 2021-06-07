@@ -12,7 +12,7 @@ use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Purger\PHPCRPurger;
 use Doctrine\Common\EventManager;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\DocumentManager as MongoDBDocumentManager;
 use Doctrine\ODM\PHPCR\DocumentManager as PHPCRDocumentManager;
 use Doctrine\ORM\EntityManagerInterface;

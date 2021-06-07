@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Adrien\FixturesForTests\Tests;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 
 class FixtureLoaderTraitTest extends TestCase

@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Adrien\FixturesForTests\Tests;
 
 use Adrien\FixturesForTests\FixtureAttachedTrait;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
