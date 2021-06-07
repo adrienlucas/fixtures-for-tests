@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Adrien\FixturesForTests\Tests;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\AssertionFailedError;
 
 class DummyOrderedFixture extends DummyFixture implements OrderedFixtureInterface

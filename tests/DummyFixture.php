@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Adrien\FixturesForTests\Tests;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class DummyFixture implements FixtureInterface
 {

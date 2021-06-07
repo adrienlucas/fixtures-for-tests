@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Adrien\FixturesForTests;
 
 use LogicException;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 trait FixtureAttachedTrait
